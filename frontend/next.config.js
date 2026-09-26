@@ -2,10 +2,15 @@
 const nextConfig = {
   reactStrictMode: false,
   async rewrites() {
+    const liveBackend = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
     return [
       {
+        source: "/api/py/:path*",
+        destination: `${liveBackend}/api/:path*`,
+      },
+      {
         source: "/api/:path*",
-        destination: "https://YOUR-LIVE-BACKEND-URL.com/api/:path*",
+        destination: `${liveBackend}/api/:path*`,
       },
     ];
   },
